@@ -1,8 +1,11 @@
-const request = require('request')
+import 'dotenv/config';
+import request from 'request';
 
-const url = 'http://api.weatherstack.com/current?access_key=e84129bc20b99e3b1452c36379b4e3ff&query=42.3605,-71.0596'
+const { API_ACCESS_KEY, BASE_URL } = process.env;
+
+const url = `${BASE_URL}/current?access_key=${API_ACCESS_KEY}&query=Moscow`;
 
 request({ url: url }, (error, response) => {
-    const data = JSON.parse(response.body)
-    console.log(data.current)
-})
+  const data = JSON.parse(response.body);
+  console.log(data.current);
+});
