@@ -1,24 +1,22 @@
 import 'dotenv/config';
 import request from 'request';
 
-export const { API_ACCESS_KEY, BASE_URL } = process.env;
+export const { MAP_BOX_TOCKEN } = process.env;
 
 export const geocode = (address, callback) => {
-  const url = `${BASE_URL}/current?access_key=${API_ACCESS_KEY}&query=${address}`;
+    const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${address}.json?access_token=${MAP_BOX_TOCKEN}&limit=1`
 
-  request({ url: url, json: true }, (error, response) => {
-    if (error) {
-      callback('Unable to connect to location services!', undefined);
-    } else if (response.body.current === undefined) {
-      callback('Unable to find location. Try another search.', undefined);
-    } else {
-      callback(
-        undefined,
-        response.body.current.weather_descriptions[0] +
-          '. It is currently ' +
-          response.body.current.temperature +
-          ' degress out.'
-      );
-    }
-  });
+    request({ url: url, json: true }, (error, response) => {
+        if (error) {
+            callback('Unable to connect to location services!', undefined)
+        } else if (response.body.features.length === 0) {
+            callback('Unable to find location. Try another search.', undefined)
+        } else {
+            callback(undefined, {
+                latitude: response.body.features[0].center[0],
+                longitude: response.body.features[0].center[1],
+                location: response.body.features[0].place_name
+            })
+        }
+    })
 };

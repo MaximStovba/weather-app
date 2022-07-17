@@ -1,6 +1,12 @@
 import { geocode } from './utils/geocode.js';
+import { forecast } from './utils/forecast.js';
 
-geocode('Moscow', (error, data) => {
-  console.log('Error:', error);
-  console.log('Data:', data);
-});
+geocode('Boston', (error, data) => {
+  console.log('Error', error)
+  console.log('Data', data)
+})
+
+forecast(44.1545, -75.7088, (error, data) => {
+  console.log('Error', error)
+  console.log('Data', data)
+})
