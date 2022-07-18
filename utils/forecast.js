@@ -4,7 +4,7 @@ import request from 'request';
 export const { API_ACCESS_KEY, BASE_URL } = process.env;
 
 export const forecast = (latitude, longitude, callback) => {
-  const url = `${BASE_URL}/current?access_key=${API_ACCESS_KEY}&query=${latitude},${longitude}&units=f`;
+  const url = `${BASE_URL}/current?access_key=${API_ACCESS_KEY}&query=${latitude},${longitude}&units=m`;
 
   request({ url: url, json: true }, (error, response) => {
     if (error) {
